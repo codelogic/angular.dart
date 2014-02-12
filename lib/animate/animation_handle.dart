@@ -65,10 +65,10 @@ class _MultiAnimationHandle extends AnimationHandle {
           //     animations were completed, COMPLETED_IGNORED will be returned.
           // if any animation was canceled, the result will be CANCELED
           var rtrn = AnimationResult.COMPLETED;
-          for(var result in results) {
-            if(result == AnimationResult.CANCELED)
+          for (var result in results) {
+            if (result == AnimationResult.CANCELED)
               return AnimationResult.CANCELED;
-            if(result == AnimationResult.COMPLETED_IGNORED)
+            if (result == AnimationResult.COMPLETED_IGNORED)
               rtrn = result;
           }
           return rtrn;
@@ -77,14 +77,14 @@ class _MultiAnimationHandle extends AnimationHandle {
 
   /// For each of the tracked [AnimationHandle]s, call complete().
   complete() {
-    for(var handle in _animationHandles) {
+    for (var handle in _animationHandles) {
       handle.complete();
     }
   }
 
   /// For each of the tracked [AnimationHandle]s, call cancel().
   cancel() {
-    for(var handle in _animationHandles) {
+    for (var handle in _animationHandles) {
       handle.cancel();
     }
   }
@@ -97,7 +97,7 @@ class _MultiAnimationHandle extends AnimationHandle {
 class _CompletedAnimationHandle extends AnimationHandle {
   Future<AnimationResult> _future;
   get onCompleted {
-    if(_future == null) {
+    if (_future == null) {
       var completer = new Completer<AnimationResult>();
       completer.complete(AnimationResult.COMPLETED_IGNORED);
       _future = completer.future;
