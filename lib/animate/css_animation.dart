@@ -16,7 +16,7 @@ class CssAnimation extends Animation {
   final String cssEventActiveClass;
 
   final Completer<AnimationResult> _completer= new Completer<AnimationResult>();
-  
+
   static const num extraDuration = 16.0; // Two extra 60fps frames of duration.
 
   AnimationResult _result;
@@ -38,21 +38,22 @@ class CssAnimation extends Animation {
         this.removeAtEnd })
         : super(targetElement);
 
-  attach() {
+  void attach() {
     // this happens right after creation time but before the first window
     // animation frame is called.
     element.classes.add(cssEventClass);
   }
 
-  start(num timeMs) {
+  void start(num timeMs) {
     // This occurs on the first animation frame.
-    // TODO(codelogic): It might be good to find some way of defering this to
+    // TODO(codelogic): It might be good to find some way of deferring this to
     //     the next digest loop instead of the first animation frame.
     startTime = timeMs;
     try {
       // Duration needs to be in milliseconds
       duration = _computeTotalDuration() * 1000 + extraDuration;
-    } catch (e) { }
+    } catch (e) {
+    }
   }
 
   bool update(num timeMs) {
@@ -60,14 +61,10 @@ class CssAnimation extends Animation {
     // inserted elements have the base event class applied before adding the
     // active class to the element. If this is not done, inserted dom nodes
     // will not run their enter animation.
-    if(!_isActive && duration > 0.0 && timeMs >= startTime) {
+    if (!_isActive && duration > 0.0 && timeMs >= startTime) {
       element.classes.add(cssEventActiveClass);
-      if(addAtStart != null) {
-        element.classes.add(addAtStart);
-      } 
-      if(removeAtStart != null) {
-        element.classes.remove(removeAtStart);
-      }
+      if (addAtStart != null) element.classes.add(addAtStart);
+      if (removeAtStart != null) element.classes.remove(removeAtStart);
       _isActive = true;
     } else if (timeMs >= startTime + duration) {
       // TODO(codelogic): If the initial frame takes a significant amount of
@@ -81,19 +78,17 @@ class CssAnimation extends Animation {
     return true;
   }
 
-  detach(num timeMs) {
-    if (!_completer.isCompleted) {
-      _onComplete(AnimationResult.COMPLETED);
-    }
+  void detach(num timeMs) {
+    if (!_completer.isCompleted) _onComplete(AnimationResult.COMPLETED);
   }
 
-  interruptAndCancel() {
+  void interruptAndCancel() {
     if (!_completer.isCompleted) {
       _removeEventAnimationClasses();
-      if(addAtStart != null) {
+      if (addAtStart != null) {
         element.classes.remove(addAtStart);
-      } 
-      if(removeAtStart != null) {
+      }
+      if (removeAtStart != null) {
         element.classes.add(removeAtStart);
       }
       _result = AnimationResult.CANCELED;
@@ -101,20 +96,18 @@ class CssAnimation extends Animation {
     }
   }
 
-  interruptAndComplete() {
-    if (!_completer.isCompleted) {
-      _onComplete(AnimationResult.COMPLETED_IGNORED);
-    }
+  void interruptAndComplete() {
+    if (!_completer.isCompleted) _onComplete(AnimationResult.COMPLETED_IGNORED);
   }
 
   // Since there are two different ways to 'complete' an animation:
   void _onComplete(AnimationResult result) {
     _removeEventAnimationClasses();
     _result = result;
-    if(addAtEnd != null) {
+    if (addAtEnd != null) {
       element.classes.add(addAtEnd);
-    } 
-    if(removeAtEnd != null) {
+    }
+    if (removeAtEnd != null) {
       element.classes.remove(removeAtEnd);
     }
     _completer.complete(_result);
@@ -122,8 +115,9 @@ class CssAnimation extends Animation {
 
   // Cleanup css event classes.
   _removeEventAnimationClasses() {
-    element.classes.remove(cssEventClass);
-    element.classes.remove(cssEventActiveClass);
+    element.classes
+        ..remove(cssEventClass)
+        ..remove(cssEventActiveClass);
   }
 
   num _computeTotalDuration() {

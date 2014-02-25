@@ -13,8 +13,7 @@ import 'dart:mirrors';
 
 @NgController(
     selector: '[animation-demo]',
-    publishAs: 'adc'
-)
+    publishAs: 'adc')
 class AnimationDemoController {
   final dom.Element rootElement;
   final NgAnimate animate;
@@ -26,14 +25,14 @@ class AnimationDemoController {
 
   dom.Element _boxElement;
   dom.Element _hostElement;
-  List<dom.Element> _animatedBoxes = [];
-  List<String> listOfThings = [];
-  
+  final _animatedBoxes = <dom.Element>[];
+  final listOfThings = <String>[];
+
   AnimationDemoController(this.animate, this.rootElement) {
     _boxElement = rootElement.querySelector(".animated-box");
     _hostElement = rootElement.querySelector(".animated-host");
   }
-  
+
   animateABox() {
     if(_boxElement != null) {
       if(boxToggle) {
@@ -50,8 +49,7 @@ class AnimationDemoController {
       if(!areThingsVisible && _animatedBoxes.length == 0) {
 
         for(int i = 0; i < 1000; i++) {
-          var element = new dom.Element.div();
-          element.classes.add("magic-box");
+          var element = new dom.Element.div()..classes.add("magic-box");
           _animatedBoxes.add(element);
         }
         animate.insert(_animatedBoxes, _hostElement);
@@ -65,21 +63,19 @@ class AnimationDemoController {
       areThingsVisible = !areThingsVisible;
     }
   }
-  
+
   addThing() {
     listOfThings.add("Thing-$thingNumber");
     thingNumber++;
   }
-  
+
   removeThing() {
-    if(listOfThings.length > 0) {
-      listOfThings.removeLast();
-    }
+    if (listOfThings.isNotEmpty) listOfThings.removeLast();
   }
 }
 
 main() {
   ngBootstrap(module: new Module()
-    ..install(new NgAnimateModule())
-    ..type(AnimationDemoController));
+      ..install(new NgAnimateModule())
+      ..type(AnimationDemoController));
 }

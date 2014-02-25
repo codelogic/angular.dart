@@ -12,8 +12,8 @@ class AnimationResult {
 
   /// A [CANCELED] animation should not procced with it's final effects.
   static const CANCELED = const AnimationResult._('CANCELED');
-  
-  /// Convienence method if you don't care exactly how an animation completed
+
+  /// Convenience method if you don't care exactly how an animation completed
   /// only that it did.
   bool get isCompleted => this == COMPLETED || this == COMPLETED_IGNORED;
 
@@ -42,13 +42,13 @@ class AnimationResult {
  *
  *   4. read() - Every animation frame you may read computed state here.
  *
- *   5. detatch() - After update returns false, detach will be executed and you
+ *   5. detach() - After update returns false, detach will be executed and you
  *         should physically detach from the dom and execute onCompleted futures
  *         so that external code that depends on your animation can do dom
  *         mutates as well.
- *         
+ *
  * Additionally, interruptAndCancel() and interruptAndComplete are used to
- * forcibly interupt an animation, and the implementation should immediatly
+ * forcibly interrupt an animation, and the implementation should immediately
  * detach from [element].
  */
 abstract class Animation {
@@ -64,14 +64,14 @@ abstract class Animation {
    * Perform dom mutations to attach an initialize the animation on [element].
    * The animation should not modify the [element] until this method is called.
    */
-  attach() { }
+  void attach() { }
 
   /**
    * This performs DOM reads to compute information about the animation, and
    * will occur after attach. [time] is a date time representation of the
    * current time, and [offsetMs] is the time since the last animation frame.
    */
-  start(num time) { }
+  void start(num time) { }
 
   /**
    * Occurs every animation frame. Return false to stop receiving animation
@@ -89,22 +89,22 @@ abstract class Animation {
    * [time] is a [DateTime] representation of the current time
    * [offsetMs] is the time since the last animation frame.
    */
-  read(num time) { }
+  void read(num time) { }
 
   /**
    * When [update] returns false, this will be called on the same animation
    * frame. Any temporary classes or element modifications should be removed
    * from the element and the onCompleted future should be executed.
    */
-  detach(num time) { }
+  void detach(num time) { }
 
   /**
-   * This occurs when another animation interupts this animation or the cancel()
-   * method is called on the AnimationHandel. The animation should remove any
-   * temporary classes or element modifications and the onCompleted future
-   * should be executed with a result of [CANCELED].
+   * This occurs when another animation interrupts this animation or the
+   * cancel() method is called on the AnimationHandel. The animation should
+   * remove any temporary classes or element modifications and the onCompleted
+   * future should be executed with a result of [CANCELED].
    */
-  interruptAndCancel() { }
+  void interruptAndCancel() { }
 
   /**
    * This occurs when the complete() method is called on the AnimationHandel.
@@ -112,5 +112,5 @@ abstract class Animation {
    * finish any final permanent modifications and the onCompleted future
    * should be executed with a result of [COMPLETED].
    */
-  interruptAndComplete() { }
+  void interruptAndComplete() { }
 }
