@@ -66,7 +66,7 @@ class AnimationOptimizer {
     //var probe = _findElementProbe(node.parentNode);
     var source = node;
     node = node.parentNode;
-    while(node != null) {
+    while (node != null) {
       if (node.nodeType == dom.Node.ELEMENT_NODE
           && isAnimating(node)) {
         // If there is an already running animation, don't animate.
@@ -93,8 +93,8 @@ class AnimationOptimizer {
   
   // Search and find the element probe for a given node.
   ElementProbe _findElementProbe(dom.Node node) {
-    while(node != null) {
-      if(_expando[node] != null) {
+    while (node != null) {
+      if (_expando[node] != null) {
         return _expando[node];
       }
       node = node.parentNode;

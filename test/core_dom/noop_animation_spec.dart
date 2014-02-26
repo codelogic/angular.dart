@@ -16,7 +16,7 @@ main() {
     it('should return a [COMPLETED_IGNORED] result when completed.', async(() {
       bool success = false;
       new NoOpAnimation().onCompleted.then((result) {
-        if(result == AnimationResult.COMPLETED_IGNORED) {
+        if (result == AnimationResult.COMPLETED_IGNORED) {
           success = true;
         }
       });

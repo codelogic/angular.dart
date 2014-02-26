@@ -25,7 +25,7 @@ class RepeatDemoComponent {
   }
   
   removeItem() {
-    if(items.length > 0) {
+    if (items.length > 0) {
       items.removeLast();
     }
   }

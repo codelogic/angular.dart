@@ -26,7 +26,7 @@ class CssAnimation extends LoopedAnimation {
 
   bool _active = true;
   bool _started = false;
-  bool _isInitiallyDisplayNone = false;
+  bool _isDisplayNone = false;
 
   Future<AnimationResult> get onCompleted => _completer.future;
 
@@ -49,7 +49,7 @@ class CssAnimation extends LoopedAnimation {
     if (_optimizer != null) {
       _optimizer.track(this, element);
     }
-    if(_animationMap != null) {
+    if (_animationMap != null) {
       _animationMap.track(this);
     }
     element.classes.add(eventClass);
@@ -65,9 +65,9 @@ class CssAnimation extends LoopedAnimation {
     if (_active && _startTime == null) {
       _startTime = timeInMs;
       var style = element.getComputedStyle();
-      _isInitiallyDisplayNone = style.display == "none";
+      _isDisplayNone = style.display == "none";
       _duration = util.computeLongestTransition(style);
-      if(_duration > 0.0) {
+      if (_duration > 0.0) {
         // Add a little extra time just to make sure transitions
         // fully complete and that we don't remove the animation classes
         // before it's completed.
@@ -94,7 +94,7 @@ class CssAnimation extends LoopedAnimation {
       // active class to the element. If this is not done, inserted dom nodes
       // will not run their enter animation.
       
-      if(_isInitiallyDisplayNone && removeAtEnd != null) {
+      if (_isDisplayNone && removeAtEnd != null) {
         element.classes.remove(removeAtEnd);
       }
 
@@ -146,10 +146,10 @@ class CssAnimation extends LoopedAnimation {
   void _detach() {
     _active = false;
 
-    if(_animationMap != null) {
+    if (_animationMap != null) {
       _animationMap.forget(this);
     }
-    if(_optimizer != null) {
+    if (_optimizer != null) {
       _optimizer.forget(this);
     }
 
