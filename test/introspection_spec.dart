@@ -1,6 +1,7 @@
 library introspection_spec;
 
 import '_specs.dart';
+import 'dart:js' as js;
 
 void main() {
   describe('introspection', () {
@@ -34,6 +35,15 @@ void main() {
       var shadowRoot = div.createShadowRoot();
       shadowRoot.innerHtml = '<ul><li>stash</li><li>secret</li><ul>';
       expect(toHtml(ngQuery(div, 'li'))).toEqual('<li>stash</li><li>secret</li>');
+    });
+
+    // Does not work in dart2js.  deboer is investigating.
+    xit('should be available from Javascript', () {
+      ngBootstrap(element: new Element.html('<div></div>'));
+      expect(js.context['ngProbe']).toBeDefined();
+      expect(js.context['ngScope']).toBeDefined();
+      expect(js.context['ngInjector']).toBeDefined();
+      expect(js.context['ngQuery']).toBeDefined();
     });
   });
 }
