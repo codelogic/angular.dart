@@ -23,9 +23,10 @@ main() {
       
       animate.addClass(_.rootElement, 'foo');
       runner.frame();
+
       expect(_.rootElement).toHaveClass('foo');
     }));
-    
+
     it('should remove a css class from an element node', async(() {
       _.compile('<div class="baz foo bar"></div>');
       expect(_.rootElement).toHaveClass('foo');
@@ -34,7 +35,7 @@ main() {
       runner.frame();
       expect(_.rootElement).not.toHaveClass('foo');
     }));
-    
+
     it('should insert nodes', async(() {
       _.compile('<div></div>');
       expect(_.rootElement.children.length).toBe(0);
@@ -42,7 +43,7 @@ main() {
       animate.insert([new Element.div()], _.rootElement);
       expect(_.rootElement.children.length).toBe(1);
     }));
-    
+
     it('should remove nodes', async(() {
       _.compile('<div><p>Hello World</p><!--comment--></div>');
       expect(_.rootElement.childNodes.length).toBe(2);
@@ -54,7 +55,7 @@ main() {
       microLeap();
       expect(_.rootElement.childNodes.length).toBe(0);
     }));
-    
+
     it('should move nodes', async(() {
       _.compile('<div></div>');
       List<Node> a = $('<span>A</span>a').toList();
@@ -66,17 +67,17 @@ main() {
       animate.move(b, _.rootElement, insertBefore: a.first);
       runner.frame();
       expect(_.rootElement.text).toEqual("BbAa");
-            
+
       animate.move(a, _.rootElement, insertBefore: b.first);
       runner.frame();
       expect(_.rootElement.text).toEqual("AaBb");
-            
+
       animate.move(a, _.rootElement);
       runner.frame();
       expect(_.rootElement.text).toEqual("BbAa");
     }));
 
-    
+
     it('should animate multiple elements', async(() {
       _.compile('<div></div>');
       List<Node> nodes = $('<span>A</span>a<span>B</span>b').toList();
@@ -85,7 +86,7 @@ main() {
       runner.frame();
       expect(_.rootElement.text).toEqual("AaBb");
     }));
-    
+
     it('should prevent child animations', async(() {
       _.compile('<div></div>');
       animate.addClass(_.rootElement, 'test');

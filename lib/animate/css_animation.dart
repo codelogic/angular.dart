@@ -22,7 +22,7 @@ class CssAnimation extends LoopedAnimation {
   final Completer<AnimationResult> _completer
       = new Completer<AnimationResult>.sync();
   
-  static const num extraDuration = 20.0; // Just a little extra
+  static const num extraDuration = 16.0; // Just a little extra time
 
   bool _active = true;
   bool _started = false;

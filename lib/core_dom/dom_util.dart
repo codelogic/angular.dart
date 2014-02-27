@@ -65,7 +65,7 @@ num computeLongestTransition(dynamic style) {
         .toList();
     List<double> delays = _parseDurationList(style.transitionDelay)
         .toList();
-      
+
     assert(durations.length == delays.length);
       
     for (int i = 0; i < durations.length; i++) {
@@ -77,17 +77,17 @@ num computeLongestTransition(dynamic style) {
     
   if (style.animationDuration.length > 0) {
     // Parse and add animation duration properties.
-    List<num> animationDurations = 
+    List<num> animationDurations =
         _parseDurationList(style.animationDuration).toList(growable: false);
     // Note that animation iteration count only affects duration NOT delay.
-    List<num> animationDelays = 
+    List<num> animationDelays =
         _parseDurationList(style.animationDelay).toList(growable: false);
-    
+
     List<num> iterationCounts = _parseIterationCounts(
         style.animationIterationCount).toList(growable: false);
-    
+
     assert(animationDurations.length == animationDelays.length);
-    
+
     for (int i = 0; i < animationDurations.length; i++) {
       var total = _computeTotalDurationSeconds(
           animationDelays[i], animationDurations[i],
@@ -100,7 +100,7 @@ num computeLongestTransition(dynamic style) {
   // transition time in milliseconds.
   return longestTransitionSeconds * 1000;
 }
-  
+
 Iterable<num> _parseIterationCounts(String iterationCounts) {
   return iterationCounts.split(", ")
           .map((x) => x == "infinite" ? -1 : num.parse(x));
@@ -126,6 +126,6 @@ num _computeTotalDurationSeconds(num delay, num duration,
     return 0.0;
   if (iterations < 0) // infinite
     iterations = 1;
-  
+
   return (duration * iterations) + delay;
 }

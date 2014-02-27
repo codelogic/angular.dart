@@ -65,7 +65,6 @@ main() {
       _.rootElements.forEach((e) => e.remove());
     }));
     
-    
     it('should swap removeAtEnd class if initial style is display none', async(() {
       _.compile("<style>.event { transition: all 500ms; display: none; }</style>"
           "<div class='remove-at-end'></div>");
@@ -106,8 +105,7 @@ main() {
       expect(element).not.toHaveClass('event');
       expect(element).not.toHaveClass('event-active');
     }));
-    
-    
+
     it('should remove the cssClassToRemove', async(() {
       _.compile("<style>.event { transition: all 500ms; }</style>"
           +"<div class=\"remove-end\"></div>");
@@ -128,7 +126,6 @@ main() {
       _.compile("<style>.event { transition: all 500ms; }</style><div></div>");
       _.rootElements.forEach((e) => document.body.append(e));
       var element = _.rootElements[1];
-
       var animation = new CssAnimation(element, "event", "event-active",
           addAtEnd: 'magic');
 
