@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<head>
+    <title>requestAnimationFrame Demo | Read all about it!</title>
+    <link type="text/css" rel="stylesheet" href="css/animation.css" />
+    <style>
+        body, html {
+            width: 100%;
+            min-height: 100%;
+            display: block;
+        }
+        .box {
+            width: 100px;
+            height: 100px;
+            margin-left: 0;
+            background-color: #3d90fe;
+            position: absolute;
+        }
+    </style>
+</head>
+<body class="ng-cloak" ng-app app ng-mousemove="appCtrl.mouseMove($event)">
+    <div box mouse="appCtrl.mouse" class="box"></div>
+    <script type="application/dart" src="raf_animation.dart"></script>
+    <script src="../packages/browser/dart.js"></script>
+</body>
+</html>
